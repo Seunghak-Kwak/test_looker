@@ -27,7 +27,7 @@
      * The create function gets called when the visualization is mounted but before any
      * data is passed to it.
      **/
-       create: function(element){
+       create: function(element,config){
            element.innerHTML = "<h1>test Ready to render!</h1>";
        },
    
