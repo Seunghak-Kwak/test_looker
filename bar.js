@@ -11,16 +11,6 @@ const visObject = {
   * panel but here, you can just manually set your default values in the code.
   **/
   options: {
-    first_option: {
-    	type: "string",
-      label: "My First Option",
-      default: "Default Value"
-    },
-    second_option: {
-    	type: "number",
-      label: "My Second Option",
-      default: 42
-    }
   },
  
  /**
@@ -64,15 +54,13 @@ const visObject = {
     // format the data
     data.forEach(function(d) {
       formattedData.push({
-      	count: data[0][queryResponse.fields.measures[0].name],
-        friendly_class: "seunghak",
-        opponent_class: "test"
+      	count: d[queryResponse.fields.measures[0].name]["value"],
+        first_dim: d[queryResponse.fields.dimensions[0].name]["value"]
       });
     });
-    
 
     // Scale the range of the data in the domains
-    x.domain(formattedData.map(function(d) { return d.friendly_class; }));
+    x.domain(formattedData.map(function(d) { return d.first_dim; }));
     y.domain([0, d3.max(formattedData, function(d) { return d.count; })]);
 
     // append the rectangles for the bar chart
@@ -81,7 +69,7 @@ const visObject = {
       .enter().append("rect")
       .attr("class", "bar")
       .attr("style", "fill: #6c43e0;")
-      .attr("x", function(d) { return x(d.friendly_class); })
+      .attr("x", function(d) { return x(d.first_dim); })
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.count); })
       .attr("height", function(d) { return height - y(d.count); });
